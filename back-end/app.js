@@ -22,6 +22,27 @@ mongoose
 const { Message } = require('./models/Message')
 const { User } = require('./models/User')
 
+
+// a route to handle fetching json for About Us
+app.get('/aboutus', async (req, res) => {
+  // load all messages from database
+  try {
+    const messages = await Message.find({})
+    res.json({
+        header: "About Us",
+        bio: ["Hi! This is Lucy. I am a senior studying Computer Science and Business. I am from Shanghai and am currently studying abroad in Singapore this semester. I enjoy traveling, backpacking, and attempting to create edible food. "],
+        image: "https://drive.google.com/file/d/1QV_3SjSeP2IqwjUe6hvR2WP-WDZpOPlN/view?usp=sharing",
+      status: 'all good',
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(400).json({
+      error: err,
+      status: 'failed to retrieve messages from the database',
+    })
+  }
+})
+
 // a route to handle fetching all messages
 app.get('/messages', async (req, res) => {
   // load all messages from database
